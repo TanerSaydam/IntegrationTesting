@@ -21,7 +21,7 @@ public class ProductEnpointTests : IAsyncLifetime, IClassFixture<eTicaretApiFact
         CreateProductDto request = new("Ürün", 1, 10);
 
         // Act
-        var response = await _httpClient.PostAsJsonAsync("https://localhost:7047/create", request);
+        var response = await _httpClient.PostAsJsonAsync("create", request);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -29,6 +29,15 @@ public class ProductEnpointTests : IAsyncLifetime, IClassFixture<eTicaretApiFact
         _ids.Add(content!.Id);
     }
 
+    [Fact]
+    public async Task GetAll_ReturnsProducts_When_Have_Products()
+    {
+        // Act
+        var response = await _httpClient.GetAsync("getall");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
     public async Task DisposeAsync()
     {
         foreach (var _id in _ids)
